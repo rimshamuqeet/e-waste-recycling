@@ -56,9 +56,48 @@
     <footer>
         <p>&copy; 2023 E-Waste Recycling. All rights reserved.</p>
     </footer>
+    <script src="script.js"></script>
 
     <!-- Google Maps API -->
-    <script src="script.js"></script>
-    <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&callback=initMap" async defer></script>
+    <script>
+        // Initialize the map
+        function initMap() {
+            // Set the initial map center (Hyderabad, India)
+            const center = { lat: 17.3850, lng: 78.4867 };
+
+            // Create the map
+            const map = new google.maps.Map(document.getElementById("map"), {
+                zoom: 12,
+                center: center,
+                mapTypeId: 'roadmap', // Use roadmap or satellite view
+            });
+
+            // Add markers for recycling centers in Hyderabad
+            const locations = [
+                { lat: 17.4484, lng: 78.3905, title: "E-Waste Recyclers", address: "Hitech City, Hyderabad" },
+                { lat: 17.4065, lng: 78.4772, title: "Green E-Waste Management", address: "Kukatpally, Hyderabad" },
+                { lat: 17.3850, lng: 78.4867, title: "Eco Recycling Ltd", address: "Banjara Hills, Hyderabad" },
+            ];
+
+            // Add markers to the map
+            locations.forEach(location => {
+                const marker = new google.maps.Marker({
+                    position: { lat: location.lat, lng: location.lng },
+                    map: map,
+                    title: location.title,
+                });
+
+                // Add info window
+                const infoWindow = new google.maps.InfoWindow({
+                    content: `<strong>${location.title}</strong><br>${location.address}`,
+                });
+                    
+                marker.addListener("click", () => {
+                    infoWindow.open(map, marker);
+                });
+            });
+        }
+    </script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCpHw2DdeYxNc7ZSw6UE7yAOq-rMqmYCKM&callback=initMap" async defer></script>
 </body>
 </html>
